@@ -7,13 +7,13 @@ else
 end
 
 case RUBY_PLATFORM
-when /\Aarm/
+when /\A(arm|aarch64) /
   # A quick fix for char being unsigned by default on ARM
   if defined?($CXXFLAGS)
-    $CXXFLAGS << ' -fsigned-char'
+    $CXXFLAGS << ' -fsigned-char -Wnarrowing -std=c++11'
   else
     # Ruby < 2.0
-    $CFLAGS << ' -fsigned-char'
+    $CFLAGS << ' -fsigned-char -Wnarrowing -std=c++11'
   end
 end
 

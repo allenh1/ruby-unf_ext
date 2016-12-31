@@ -9,8 +9,14 @@ namespace UNF {
   namespace Trie {
     class Searcher {
     public:
-      Searcher(const Node* nodes, unsigned root, const char* value=NULL)
-	: nodes(nodes), root(root), value(value) {}
+		Searcher(const Node* nodes = NULL,
+				 const unsigned root = 0,
+				 const signed char* value=NULL)
+			{
+				this->nodes = (const Node*) nodes;
+				this->root = (const unsigned) root;
+				this->value = (const char *) value;
+			}
 
       unsigned find_value(const char* key, int default_value) const {
 	unsigned node_index=root;
@@ -28,7 +34,7 @@ namespace UNF {
 
     protected:
       const Node* nodes;
-      const unsigned root;
+      unsigned root;
       const char* value;
     }; 
     
@@ -95,8 +101,8 @@ namespace UNF {
 
     class NormalizationForm : private Searcher {
     public:
-      NormalizationForm(const unsigned* node_uints, unsigned root, const char* value=NULL)
-	: Searcher(Node::from_uint_array(node_uints), root, value) {} 
+      NormalizationForm(const unsigned* node_uints, unsigned root, const signed char* value=NULL)
+		  : Searcher((Node*) Node::from_uint_array(node_uints), root, value) {} 
 
       bool quick_check(const char* key) const { return find_value(key,0xFFFFFFFF)==0xFFFFFFFF; }
 
